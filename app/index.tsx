@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 import * as SplashScreen from "expo-splash-screen";
 import api from "@/lib/apiService";
+import { printTicket } from "@/lib/printerService";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -157,8 +158,11 @@ function App() {
       const ticketNumber = response.data.number;
 
       try {
-        // Aqui você implementaria a lógica de impressão
-        console.log(`Imprimindo ticket: ${ticketNumber}`);
+        await printTicket({
+          number: ticketNumber,
+          type: selectedType as 'NORMAL' | 'PREFERENCIAL'
+        });
+        console.log(`Ticket impresso: ${ticketNumber}`);
       } catch (printError) {
         console.error("Erro na impressão:", printError);
 

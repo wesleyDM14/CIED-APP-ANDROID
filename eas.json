@@ -12,7 +12,11 @@
         "gradleCommand": ":app:assembleDebug"
       },
       "env": {
-        "APP_ENV": "development"
+        "APP_ENV": "development",
+        "EXPO_PUBLIC_API_KEY": "EXPO_PUBLIC_API_KEY",
+        "EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
+        "EXPO_PUBLIC_PRINTER_IP": "EXPO_PUBLIC_PRINTER_IP",
+        "EXPO_PUBLIC_PRINTER_PORT": "EXPO_PUBLIC_PRINTER_PORT"
       }
     },
     "preview": {
@@ -22,7 +26,11 @@
         "gradleCommand": ":app:assembleRelease"
       },
       "env": {
-        "APP_ENV": "preview"
+        "APP_ENV": "preview",
+        "EXPO_PUBLIC_API_KEY": "EXPO_PUBLIC_API_KEY",
+        "EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
+        "EXPO_PUBLIC_PRINTER_IP": "EXPO_PUBLIC_PRINTER_IP",
+        "EXPO_PUBLIC_PRINTER_PORT": "EXPO_PUBLIC_PRINTER_PORT"
       }
     },
     "production": {
@@ -32,7 +40,11 @@
         "gradleCommand": ":app:assembleRelease"
       },
       "env": {
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "EXPO_PUBLIC_API_KEY": "EXPO_PUBLIC_API_KEY",
+        "EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
+        "EXPO_PUBLIC_PRINTER_IP": "EXPO_PUBLIC_PRINTER_IP",
+        "EXPO_PUBLIC_PRINTER_PORT": "EXPO_PUBLIC_PRINTER_PORT"
       }
     }
   }

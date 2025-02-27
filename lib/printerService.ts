@@ -7,13 +7,14 @@ const GS = '\x1D';
 
 const commands = {
     INIT: `${ESC}@`,
-    BOLD_ON: `${ESC}E1`,
-    BOLD_OFF: `${ESC}E0`,
-    ALIGN_LEFT: `${ESC}a0`,
-    ALIGN_CENTER: `${ESC}a1`,
-    ALIGN_RIGHT: `${ESC}a2`,
-    FEED: (lines: number) => `${ESC}d${lines}`,
-    CUT: `${GS}V0`,
+    BOLD_ON: `${ESC}E\x01`,
+    BOLD_OFF: `${ESC}E\x00`,
+    ALIGN_LEFT: `${ESC}a\x00`,
+    ALIGN_CENTER: `${ESC}a\x01`,
+    ALIGN_RIGHT: `${ESC}a\x02`,
+    FEED: (lines: number) => `${ESC}d${String.fromCharCode(lines)}`,
+    CUT: `${GS}V\x41\x00`,
+    LINE_BREAK: '\n',
 };
 
 interface PrinterConfig {
@@ -34,18 +35,17 @@ export const printTicket = async (ticket: PrintTicketParams, config?: PrinterCon
         let output = commands.INIT;
         output += commands.ALIGN_CENTER;
         output += commands.BOLD_ON;
-        output += '\\nCIED - Complexo Hospitalar\\n';
-        output += commands.BOLD_OFF;
-        output += '\\n\\n';
+        output += 'CIED - Complexo Hospitalar' + commands.LINE_BREAK;
+        output += commands.BOLD_OFF + commands.LINE_BREAK.repeat(2);
         output += commands.ALIGN_LEFT;
-        output += `Data: ${new Date().toLocaleDateString()}\\n`;
-        output += `Hora: ${new Date().toLocaleTimeString()}\\n\\n`;
+        output += `Data: ${new Date().toLocaleDateString()}${commands.LINE_BREAK}`;
+        output += `Hora: ${new Date().toLocaleTimeString()}${commands.LINE_BREAK.repeat(2)}`;
         output += commands.ALIGN_CENTER;
         output += commands.BOLD_ON;
-        output += `SENHA ${ticket.type}\\n\\n`;
-        output += `${ticket.number}\\n\\n`;
+        output += `SENHA ${ticket.type}${commands.LINE_BREAK.repeat(2)}`;
+        output += `${ticket.number}${commands.LINE_BREAK.repeat(2)}`;
         output += commands.BOLD_OFF;
-        output += 'Aguarde seu atendimento\\n';
+        output += 'Aguarde seu atendimento' + commands.LINE_BREAK;
         output += commands.FEED(3);
         output += commands.CUT;
 
@@ -67,7 +67,7 @@ const sendToPrinter = async (data: string, ip: string, port: number) => {
         const socket = require('react-native-tcp-socket').createConnection(
             { port, host: ip },
             () => {
-                socket.write(data, 'utf8', () => {
+                socket.write(data, 'binary', () => {
                     socket.destroy();
                     resolve(true);
                 });

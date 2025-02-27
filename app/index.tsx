@@ -7,6 +7,7 @@ import * as NavigationBar from "expo-navigation-bar";
 import * as SplashScreen from "expo-splash-screen";
 import api from "@/lib/apiService";
 import { printTicket } from "@/lib/printerService";
+import axios from "axios";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -151,7 +152,6 @@ function App() {
   }, []);
 
   const handleTicketGeneration = useCallback(async () => {
-    console.log(process.env.EXPO_PUBLIC_API_URL);
     setIsLoading(true);
     try {
       const response = await api.post("/api/tickets/create", { type: selectedType });
@@ -179,8 +179,12 @@ function App() {
         [{ text: "OK" }]
       );
 
-    } catch (error) {
-      console.error("Erro ao gerar ticket:", error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("Erro ao gerar ticket:", error.message);
+      } else {
+        console.error("Erro desconhecido:", error);
+      }
       Alert.alert(
         "Erro",
         "Não foi possível gerar o ticket. Tente novamente.",

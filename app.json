@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CIED Atendimento",
-    "slug": "cied-atendimento",
+    "slug": "CIED-ANDROID_APP",
     "version": "1.0.0",
     "orientation": "landscape",
     "icon": "./assets/images/icon.png",
@@ -27,6 +27,8 @@
       }
     },
     "android": {
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
+      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
